@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Petlove</title>
+  </head>
+  <body>
+    <img src="pet-love.png" alt="logo da petlove" style="width: 12%;">
+    <div id="root"></div>
+    <label>
+      <input type="text" name="cep" class="input-cep"/>
+      <button type="submit" onClick={this.handleClick} class="btn">Buscar CEP</button>
+      </label>
+    <div class="dados"> 
+          <p>Cep:</p>
+          <input type="text" name="cep1"/>
+          <p style="margin-left: 14%;">Estado:</p>
+          <input type="text" name="uf"/>
+          <p style="margin-left: 13%;">Cidade:</p>
+          <input type="text" name="cidade"/>
+          <p style="margin-left: 2%;">Logradouro:</p>
+          <input type="text" name="log"/>
+      </div>
+  </body>
+</html>
+
+<script type="text/javascript">
+const $campoCepPesquisa = document.querySelector('[name="cep"]');
+const $campoCep = document.querySelector('[name="cep1"]');
+const $campoUf = document.querySelector('[name="uf"]');
+const $campoCidade = document.querySelector('[name="cidade"]');
+const $campoLog = document.querySelector('[name="log"]');
+
+
+  $campoCepPesquisa.addEventListener("blur", (infosDoEvento) => {
+    var dados = document.querySelector('.dados');
+    const cep = infosDoEvento.target.value
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then((respostaDoServer) =>{
+        return respostaDoServer.json();
+      })
+      .then((dadosDoCep) =>{
+        console.log(dadosDoCep);
+        $campoCep.value = dadosDoCep.cep;
+        $campoUf.value = dadosDoCep.uf;
+        $campoCidade.value = dadosDoCep.localidade;
+        $campoLog.value = dadosDoCep.logradouro;
+      });
+      dados.style.display = 'block';
+      }
+    );
+
+  </script>
